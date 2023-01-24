@@ -1,5 +1,5 @@
 <template>
-  
+
   <div id="app">
    
     <nav class="navbar navbar-expand-lg bg-dark">
@@ -18,7 +18,9 @@
     </nav>
      <br> 
     <router-view></router-view> 
+    <notifications/>
   </div>
+
 </template>
 
 <script>

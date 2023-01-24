@@ -29,6 +29,7 @@
 </template>
 <script>
 import axios from "axios"
+import APIURL from "../main"
 export default {
     data () {
     return {
@@ -38,19 +39,35 @@ export default {
     
     methods: {
       getDetailInfo (member) {
-        this.$router.push(`http://127.0.0.1:8000/member/${member.id}`)
+        try{ this.$router.push(`${APIURL}${member.id}`)}
+        catch(error){
+          this.$notify({
+            title: 'Error',
+            text: 'Your data was submitted successfully'
+        });
+        }
+       
       },
       deleteMember(id){
-      axios.delete(`http://127.0.0.1:8000/deleteMember/${id}`);
+      axios.delete(`${APIURL}deleteMember/${id}`).then(
+        response => {
+          this.$notify({
+            title: 'Success',
+            text: 'участник удален',
+            type: 'success'
+        })
+        }
+      );
     }
     },  
     mounted () {
       axios
-        .get('http://127.0.0.1:8000/members')
+        .get(`${APIURL}members`)
         .then(response => (this.members = response.data))
         console.log(this.members) 
     }
 }
+
 </script>
 <style>
     

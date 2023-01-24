@@ -20,10 +20,13 @@
          
           </form>
           <button type="submit" class="btn btn-primary" @click="createMember">Добавить</button>
-    </div>
+        </div>
+   
 </template>
 <script>
 import axios from 'axios'
+import APIURL from '../main'
+// import {$notify} from 'vue-notification'
 export default {
     data(){
         return {
@@ -34,17 +37,27 @@ export default {
         }
     },
     methods:{
-        createMember(){
+        createMember() {
             const member = {
             name: this.name,
             lastname: this.lastname,
             username: this.username,
             date_of_birth: this.date_of_birth
             }
-            return axios.post('http://127.0.0.1:8000/addMember', member).then(
-                response => {console.log(response)}
-            )
-        }
+    axios.post(`${APIURL}addMember`, member).then(response => {
+        this.$notify({
+            title: 'Success',
+            text: 'Your data was submitted successfully',
+            type: 'success'
+        })
+    }).catch (error => {
+        this.$notify({
+            title: 'Error',
+            text: 'An error occurred while submitting your data',
+            type: 'error'
+        });
+    })
+},
     }
 }
 </script>
